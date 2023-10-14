@@ -1,0 +1,170 @@
+---
+title: "RWorksheet_Talon#3b"
+author: "Cedric Mikhail Talon"
+date: "2023-10-14"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```
+
+#1.
+
+#a.
+dframeRspndts <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)
+dframeSex <- c(2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2)
+dframeFatherOcc <- c(1,3,3,3,1,2,3,1,1,1,3,2,1,3,3,1,3,1,2,1)
+dframePersonAtHome <- c(5,7,3,8,5,9,6,7,8,4,7,5,4,7,8,8,3,11,7,6)
+dframeSiblingsAtSchool <- c(6,4,4,1,2,1,5,3,1,2,3,2,5,5,2,1,2,5,3,2)
+dframeTypesOfHouse <- c(1,2,3,1,1,3,3,1,2,3,2,3,2,2,3,3,3,3,3,2)
+
+dframeHouseholdData <- data.frame("Respondents" = dframeRspndts,"Sex" = dframeSex, "Fathers Occupation" = dframeFatherOcc,
+                                  "Persons at Home" = dframePersonAtHome, "Siblings at School" = dframeSiblingsAtSchool,
+                                  "Types of House" = dframeTypesOfHouse)
+
+dframeHouseholdData
+
+
+#b the data summarizes the household 
+
+summary(dframeHouseholdData)
+
+
+#c
+
+#wrong, the correct answer is 2.95
+
+#d
+FirstNSecond <- dframeHouseholdData[1:2,]
+FirstNSecond
+
+#Respondents Sex Fathers.Occupation Persons.at.Home Siblings.at.School Types.of.House
+#1           1   2                  1               5                  6              1
+#2           2   2                  3               7                  4              2
+
+#e
+
+ThridN5_2N4 <- dframeHouseholdData[c(3,5),c(2,4)]
+ThridN5_2N4
+
+#Sex Persons.at.Home
+#3   1               3
+#5   2               5
+
+#f
+
+Types_Houses <- dframeHouseholdData[,1]
+Types_Houses
+
+#g
+
+dframeMlFatherOcc <- dframeHouseholdData[dframeHouseholdData$Sex == 1 & dframeHouseholdData$Fathers.Occupation == 1, c(2,3)]
+dframeMlFatherOcc
+
+#h
+
+dframeFmlSiblings <- dframeHouseholdData[dframeHouseholdData$Sex == 2 & dframeHouseholdData$Siblings.at.School >= 5, c(2,5)]
+dframeFmlSiblings
+
+#Sex Siblings.at.School
+#1    2                  6
+#7    2                  5
+#13   2                  5
+#14   2                  5
+#18   2                  5
+
+
+#2
+dframeNum2 <- data.frame(Ints=integer(),
+                         Doubles=double(), Characters=character(),
+                         Logicals=logical(),
+                         Factors=factor(),
+                         stringsAsFactors=FALSE)
+
+print("Structure of the empty dataframe:")
+print(str(df))
+
+#a  #it will print the structure of the given dataframe
+
+
+#3
+
+dframe2Respondents <- c(1:10)
+dframe2Sex <- c("Male", "Female", "Female", "Male", "Male", "Female", "Female", "Male","Female", "Male")
+dframe2FatherOcc <- c(1,2,3,3,1,2,2,3,1,3)
+dframe2PersonAtHome <- c(5,7,3,8,6,4,4,2,11,6)
+dframe2SiblingsAtSchl <- c(2,3,0,5,2,3,1,2,6,2)
+dframe2TypeOfHouse <- c("Wood", "Congrete", "Congrete", "Wood", "Semi-congrete", "Semi-congrete", "Wood", "Semi-congrete", "Semi-congrete", "Congrete")
+
+dframe2HHD <- data.frame("Respondents" = dframe2Respondents,
+                         "Sex" = dframe2Sex,
+                         "Fathers Occupation" = dframe2FatherOcc,
+                         "Person at Home" = dframe2PersonAtHome,
+                         "Siblings at School" = dframe2SiblingsAtSchl,
+                         "Type of Houses" = dframe2TypeOfHouse)
+
+dframe2HHD
+
+
+write.csv(dframe2HHD, file = "HouseHoldData.csv")
+
+
+#a
+
+csvHHD <- read.csv(file = "HouseHoldData.csv")
+csvHHD
+
+#b
+
+csvHHDSex <- as.integer(factor(csvHHD$Sex, levels = c("Male", "Female")))
+csvHHDSex
+
+#1 2 2 1 1 2 2 1 2 1
+
+#c
+csvHHDTypeofHouse <- as.integer(factor(csvHHD$Type.of.Houses, levels = c("Wood", "Congrete","Semi-congrete")))
+csvHHDTypeofHouse
+
+#1 2 2 1 3 3 1 3 3 2
+
+#d
+
+csvHHD$Fathers.Occupation
+csvHHDfatherOccu <- as.integer(factor(csvHHD$Fathers.Occupation, levels = c("")))
+csvHHDfatherOccu
+
+
+#e
+
+csvHHDFemFatherOccu <- csvHHD[csvHHD$Sex == "Female" & csvHHD$Fathers.Occupation == 2, c(3,4)]
+csvHHDFemFatherOccu
+
+#2 Female                  2
+#6 Female                  2
+#7 Female                  2
+
+#f
+
+csvHHDSkolarNgBayan <- csvHHD[csvHHD$Siblings.at.School >= 5, c(2,6)]
+csvHHDSkolarNgBayan
+
+#4           4                  5
+#9           9                  6
+
+
+#4
+
+
+# The negative sentiments on July 14 became a majority on that day, implying that there is something negative happened.
+# Peaking at July 15 followed by positive and neutral, implying that the hate continues and just increased.
+# followed by July 16 and 17 having the same amount of negativity, only to drop at the lowest digits on july 20
+# and rising again on July 21 claiming it as the 2nd highest. This indicates that there are negative occurances
+# that was happening on those days, while others remain positive, meaning that public opinion do vary from time to time.
+
+
+```
+
