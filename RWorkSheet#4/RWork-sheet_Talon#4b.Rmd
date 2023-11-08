@@ -1,0 +1,44 @@
+---
+title: "RWork-sheet_Talon#4b"
+author: "Cedric Mikhail Talon"
+date: "2023-11-08"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+#1. Using the for loop, create an R script that will display a 5x5 matrix
+
+vectorA <- c(1,2,3,4,5)
+matrixA <- matrix(0,nrow =5, ncol =5)
+
+for (i in 1:5)
+  for (j in 1:5)
+{
+  matrixA[i,j] <- abs (vectorA[i] - vectorA[j])
+}
+  matrixA
+  
+
+
+```
+#2.Print the string "*" using for() function.
+```{r}
+
+for(i in 1:5)
+  cat(paste0("\"",rep("*",i), "\""), "\n")
+
+
+
+```
+
+#3
+```{r}
+
+
+
+```
