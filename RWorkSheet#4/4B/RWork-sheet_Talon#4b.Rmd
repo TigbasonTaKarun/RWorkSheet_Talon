@@ -1,0 +1,259 @@
+---
+title: "RWork-sheet_Talon#4b"
+author: "Cedric Mikhail Talon"
+date: "2023-11-08"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1. Using the for loop, create an R script that will display a 5x5 matrix
+```{r}
+
+
+
+vector <- c(1,2,3,4,5)
+matrix <- matrix(0,nrow =5, ncol =5)
+
+for (i in 1:5)
+  for (j in 1:5)
+{
+  matrix[i,j] <- abs (vector[i] - vector[j])
+}
+  matrix
+  
+
+
+```
+#2 Print the string "*" using for() function.
+```{r}
+
+for(i in 1:5)
+  cat(paste0("\"",rep("*",i), "\""), "\n")
+
+
+
+```
+
+#3
+```{r}
+
+start <- as.numeric(readline("enter the fist number in fibo seq: "))
+
+start <- 4
+a <- start
+b <- 0
+
+cat("Fib from start",start,":\n")
+cat(start,"")
+
+repeat{
+  fib <- a+b
+  if(fib>500){
+    break
+  }
+  cat(fib," ")
+  a <- b
+  b <- fib
+}
+
+```
+
+#4  Create a graph for the number of males and females for Household Data.
+
+```{r}
+
+
+Newdata <- read.csv("sapatos.csv")
+head(Newdata)
+
+shoes <- read.csv("sapatos.csv",header = TRUE)
+
+shoes
+
+maleSub <- subset(shoes, Gender == "M")
+maleSub
+
+femaleSub <- subset(shoes, Gender == "F")
+femaleSub
+
+  ratio <- table(Newdata$Gender)
+barplot(ratio,
+        main = "XX / XY",
+        xlab = "Gender",
+        ylab = "Pila",
+        col = c("yellow", "red"),
+        legend.text = rownames(ratio),
+        beside = TRUE)
+
+
+```
+
+#5 the following income of Dela Cruz family was spent on the follwing
+```{r}
+
+data <- c(food = 60,elecctricity = 10,savings = 5,miscellaneous = 25)
+
+percent <- paste(round(100* data /sum (data),1),"%",sep ="")
+
+
+pie(data, labels = paste(names(data),"(",percent,")",sep=""),col = rainbow(length(data)),main = "expense distribution")
+
+
+
+```
+
+#6 Use the iris dataset
+```{r}
+
+data(iris)
+
+
+#a
+
+str(iris)
+
+#b
+
+Flowermean <- colMeans(iris[,1:4])
+Flowermean
+
+#c
+species <- table(iris$Species)
+pie(species, labels = species, col = rainbow(length(species)), main = "Distribution Le Species")
+legend("topright", names(species), cex = 0.8, fill = rainbow(length(species)))
+
+#d
+setosa_sub <- subset(iris, Species == "Setosa")
+versicolor_sub <- subset(iris, Species == "Versicolor")
+virginica_sub <- subset(iris, Species == "Virginica")
+  
+
+
+tail(setosa_sub, 6)
+tail(versicolor_sub, 6)
+tail(virginica_sub, 6)
+
+
+
+#e
+iris$Species <- as.factor(iris$Species)
+
+plot(
+  Sepal.Length ~ Sepal.Width,
+  data = iris,
+   pch = as.integer(iris$Species),
+   col = as.integer(iris$Species),
+  
+  xlab = "Sepal Length",
+  ylab = "Sepal Width",
+  main = "Iris Dataset",
+  sub = "Sepal width and length")
+
+
+    legend("topright", legend = levels(iris$Species), col = 1:3, pch = 1:3, cex = 0.8, title = "Species")
+
+
+
+ #f
+#the dataset has variables, columns and rows in a dataframe format.
+#The four numerical variables are Petal.Length, Petal.Width, Sepal.Length, and Sepal. Width
+
+```
+
+#7.Import the alexa-file.xlsx. Check on the variations.
+```{r}
+library(readxl)
+alexaFile <- read_excel("alexa_file.xlsx")
+alexaFile
+```
+
+
+#a Rename the white and black variants by using gsub() function.
+```{r}
+
+alexaFile$variation <- gsub("Black  Dot", "BlackDot", alexaFile$variation)
+alexaFile$variation <- gsub("Black  Plus", "BlackPlus", alexaFile$variation)
+alexaFile$variation <- gsub("Black  Show", "BlackShow", alexaFile$variation)
+alexaFile$variation <- gsub("Black  Spot", "BlackSpot", alexaFile$variation)
+
+alexaFile$variation <- gsub("White  Dot", "WhiteDot", alexaFile$variation)
+alexaFile$variation <- gsub("White  Plus", "WhitePlus", alexaFile$variation)
+alexaFile$variation <- gsub("White  Show", "WhiteShow", alexaFile$variation)
+alexaFile$variation <- gsub("White  Spot", "WhiteSpot", alexaFile$variation)
+
+alexaFile
+```
+
+#b  Get the total number of each variations and save it into another object.
+```{r}
+
+library("dplyr")
+
+totalVar <- alexaFile %>% 
+  count(alexaFile$variation)
+
+totalVar 
+save(totalVar , file = "variations.RData")
+
+```
+
+#c  From the variations.RData, create a barplot().
+```{r}
+load("variations.RData")
+totalVar
+varNames <- totalVar$`alexaFile$variation`
+
+totallenPlotten <- barplot(totalVar$n,
+        names.arg = varNames,
+        main = "Total number of variations",
+        xlab = "Variation names",
+        ylab = "Variation total number",
+        col = 1:16,
+          space = 2)
+
+png("totallenPlotten.png")
+dev.off
+ knitr::include_graphics("/cloud/project/RWorkSheet#4/4B/totallenPlotten.png")
+
+```
+
+#d Create a barplot() for the black and white variations.
+```{r}
+
+black_Var <- totalVar[totalVar$`alexaFile$variation` %in% c("Black", "BlackDot" , "BlackSpot" ,"BlackShow" ,"BlackPlus"), ]
+
+white_Var <- totalVar[totalVar$`alexaFile$variation` %in% c("White", "WhiteDot", "WhiteShow", "WhitePlus", "WhiteSpot"), ]
+
+    par(mfrow = c(1,2))
+
+
+  darkmode <-  barplot(height = black_Var$n,
+        names.arg = black_Var$`alexaFile$variation`,
+        col = c("black"),
+        main = "Variations of Black",
+        xlab = "Variation",
+        ylab = "Numbers",
+        border = "white",
+        space = 0.5,
+        cex.names = 0.4)
+    
+  lightmode <-  barplot(height = white_Var$n,
+        names.arg = white_Var$`alexaFile$variation`,
+        col = c("white"),
+        main = "Variations of White",
+        xlab = "Variation",
+        ylab = "Numbers",
+        border = "black",
+        space = 0.5,
+        cex.names = 0.4)
+  
+  png("BWgraph.png")
+  
+  dev.off()
+  
+  knitr::include_graphics("/cloud/project/RWorkSheet#4/4B/BWgraph.png")
+
+
+```
