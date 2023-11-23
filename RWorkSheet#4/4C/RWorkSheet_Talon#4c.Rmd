@@ -1,0 +1,91 @@
+---
+title: "RWorksheet_Talon#4c"
+author: "Cedric Mikhail Talon"
+date: "2023-11-22"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1
+#a. Show your solutions on how to import a csv file into the environment.
+```{r}
+
+library(readr)
+
+mpg <- read.csv("mpg.csv")
+mpg
+
+
+```
+#b.  Which variables from mpg dataset are categorical?
+```{r}
+str(mpg)
+```
+#c.  Which are continuous variables?
+```{r}
+ conti_var <- c("displ","year","cyl","cty","hwy")
+ conti_var
+```
+#2. Which manufacturer has the most models in this data set?
+```{r}
+manufacturer <-
+```
+#a. Group the manufacturers and find the unique models. Show your codes and result
+```{r}
+
+```
+#b. Graph the result by using plot() and ggplot(). Write the codes and its result.
+```{r}
+
+```
+#2. Same dataset will be used. You are going to show the relationship of the modeland the manufacturer.
+```{r}
+
+```
+#a. What does ggplot(mpg, aes(model, manufacturer)) + geom_point() show?
+```{r}
+
+```
+#b. For you, is it useful? If not, how could you modify the data to make it more informative?
+```{r}
+
+```
+#3. Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and its results.
+```{r}
+
+```
+#4. Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+```{r}
+
+```
+#a. Plot using geom_bar() using the top 20 observations only. The graphs shoudl have a title, labels and colors. Show code and results.
+```{r}
+
+```
+#b. Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
+
+```{r}
+
+```
+#5. Plot the relationship between cyl - number of cylinders and displ - engine displacement using geom_point with aesthetic color = engine displacement. Title should be “Relationship between No. of Cylinders and Engine Displacement”.
+```{r}
+
+```
+#a. How would you describe its relationship? Show the codes and its result.
+```{r}
+
+```
+#6. Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped it with a continuous variable you have identified in #1-c. What is its result? Why it produced such output?
+```{r}
+
+```
+#
+```{r}
+
+```
+#
+```{r}
+
+```
